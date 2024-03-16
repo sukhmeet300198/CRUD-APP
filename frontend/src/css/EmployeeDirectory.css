@@ -1,0 +1,29 @@
+/* EmployeeDirectory.css */
+.employee-directory-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.employee-directory-header {
+  text-align: center;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.employee-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Further customize with specific styles for EmployeeSearch, EmployeeCreate, and EmployeeTable */
+.employee-search-section,
+.employee-create-section {
+  margin-bottom: 20px;
+}
+
+/* Assuming EmployeeTable styles are defined in EmployeeTable.css */
