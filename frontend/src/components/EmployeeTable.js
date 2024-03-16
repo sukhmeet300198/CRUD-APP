@@ -3,7 +3,7 @@ import '../css/EmployeeTable.css'
 import { useQuery } from '@apollo/client';
 import { GET_ALL_EMPLOYEES } from '../queries.js';
 import EmployeeFilters from './EmployeeFilters.js';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function EmployeeTable() {
   let { type } = useParams() || "";
@@ -34,6 +34,7 @@ function EmployeeTable() {
               <th>Department</th>
               <th>Employee Type</th>
               <th>Current Status</th>
+              <th>ACTIONS</th>
             </tr>
           </thead>
           <tbody>
@@ -47,6 +48,7 @@ function EmployeeTable() {
                 <td>{employee?.department}</td>
                 <td>{employee?.employeeType}</td>
                 <td>{employee?.currentStatus || '0'}</td>
+                <td><Link to={`/employeesDetail/${employee.id}`}>Detail</Link>{" "}<Link to={`/employees/update/${employee.id}`}>Update</Link></td>
               </tr>
             ))}
           </tbody>

@@ -16,6 +16,19 @@ const resolvers = {
         throw new Error('Error fetching employees');
       }
     },
+    // Resolver for fetching a single employee by ID
+    employee: async (_, { id }) => {
+      try {
+        const employee = await Employee.findById(id);
+        if (!employee) {
+          throw new Error('Employee not found');
+        }
+        return employee;
+      } catch (error) {
+        console.log(error);
+        throw new Error('Error fetching employee');
+      }
+    },
   },
   Mutation: {
     createEmployee: async (_, { firstName, lastName, age, dateOfJoining, title, department, employeeType }) => {
@@ -45,33 +58,21 @@ const resolvers = {
         throw new Error('Error creating new employee');
       }
     },
-    updateEmployee: async (_, { id, firstName, lastName, age, dateOfJoining, title, department, employeeType, currentStatus }) => {
+    updateEmployee: async (_, { id, title, department, currentStatus }) => {
       try {
-        const updatedEmployee = await Employee.findByIdAndUpdate(id, {
-          $set: {
-            firstName,
-            lastName,
-            age,
-            dateOfJoining,
-            title,
-            department,
-            employeeType,
-            currentStatus
-          }
-        }, { new: true }); // new: true returns the updated object
+        // Find employee by ID and update the specified fields
+        const updatedEmployee = await Employee.findByIdAndUpdate(
+          id,
+          { $set: { title, department, currentStatus } },
+          { new: true } // Return the updated document
+        );
+        if (!updatedEmployee) {
+          throw new Error('Employee not found');
+        }
         return updatedEmployee;
       } catch (error) {
-        console.error(error);
-        throw new Error('Error updating employee');
-      }
-    },
-    deleteEmployee: async (_, { id }) => {
-      try {
-        await Employee.findByIdAndDelete(id);
-        return `Employee with ID ${id} was deleted successfully.`;
-      } catch (error) {
-        console.error(error);
-        throw new Error('Error deleting employee');
+        console.error('Error updating employee:', error);
+        throw new Error(error);
       }
     },
   }

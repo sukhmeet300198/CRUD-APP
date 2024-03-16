@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import EmployeeDirectory from './components/EmployeeDirectory';
 import EmployeeCreate from './components/EmployeeCreate';
-// import EmployeeUpdate from './components/EmployeeUpdate';
+import EmployeeDetail from './components/EmployeeDetail';
+import EmployeeUpdate from './components/EmployeeUpdate';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
         {/* Route Configuration for React Router */}
         <Routes>
           <Route path="/create" element={<EmployeeCreate />} />
-          {/* <Route path="/update/:id" element={<EmployeeUpdate />} /> */}
+          <Route path="/employees/update/:employeeId" element={<EmployeeUpdate />} />
+          <Route path="/employeesDetail/:id" element={<EmployeeDetail />} />
           <Route path="/employees/:type" element={<EmployeeDirectory />} />
           <Route path="/" element={<EmployeeDirectory />} />
         </Routes>
