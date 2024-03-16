@@ -1,12 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-
   type Query {
     allEmployees(type: String): [Employee]
-  }
-  
-  type Query {
     employee(id: ID!): Employee
   }
   
@@ -28,7 +24,7 @@ const typeDefs = gql`
       currentStatus: Boolean
     ): Employee
     
-    deleteEmployee(id: ID!): String
+    deleteEmployee(id: ID!): Employee
   }
 
   type Employee {

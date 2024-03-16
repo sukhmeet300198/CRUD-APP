@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import '../css/EmployeeCreate.css';
-import { CREATE_EMPLOYEE_MUTATION,GET_ALL_EMPLOYEES } from '../queries.js';
+import { CREATE_EMPLOYEE_MUTATION, GET_ALL_EMPLOYEES } from '../queries.js';
+import { useNavigate } from 'react-router-dom'
 
 function EmployeeCreate(props) {
+
+  const navigate = useNavigate(); // Initialize useNavigate
   const [createEmployee, { data, loading, error }] = useMutation(CREATE_EMPLOYEE_MUTATION, {
     update(cache, { data: { createEmployee } }) {
-      const { allEmployees } = cache.readQuery({ query: GET_ALL_EMPLOYEES });
-      cache.writeQuery({
+      const existingEmployees = cache.readQuery({
         query: GET_ALL_EMPLOYEES,
-        data: { allEmployees: allEmployees.concat([createEmployee]) },
+        variables: { type: '' }, // Ensure this matches how you query 'allEmployees' elsewhere
       });
+
+      if (existingEmployees && createEmployee) {
+        cache.writeQuery({
+          query: GET_ALL_EMPLOYEES,
+          variables: { type: '' }, // Consistent with the readQuery above
+          data: {
+            allEmployees: [...existingEmployees.allEmployees, createEmployee],
+          },
+        });
+      }
     },
+    onCompleted: () => {
+      navigate('/');
+    }
   });
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -74,18 +89,6 @@ function EmployeeCreate(props) {
       createEmployee({ variables: { ...formData, age: ageInt } })
         .then(response => {
           console.log('Employee created:', response.data.createEmployee);
-
-          // reset form fields here
-          setFormData({
-            firstName: '',
-            lastName: '',
-            age: '',
-            dateOfJoining: '',
-            title: '',
-            department: '',
-            employeeType: '',
-          });
-          props.onCreateSuccess();
         })
         .catch(error => {
           console.error('Error creating employee:', error);

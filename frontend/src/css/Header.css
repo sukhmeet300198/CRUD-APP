@@ -68,7 +68,9 @@
   color: #fff;
   text-decoration: none;
 }
-
+.link{
+  color: white;
+}
 /* Responsive styles */
 @media (max-width: 768px) {
   .header {

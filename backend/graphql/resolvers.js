@@ -16,7 +16,7 @@ const resolvers = {
         throw new Error('Error fetching employees');
       }
     },
-    // Resolver for fetching a single employee by ID
+    // fetching a single employee by ID
     employee: async (_, { id }) => {
       try {
         const employee = await Employee.findById(id);
@@ -73,6 +73,13 @@ const resolvers = {
       } catch (error) {
         console.error('Error updating employee:', error);
         throw new Error(error);
+      }
+    },
+    deleteEmployee: async (_, { id }) => {
+      try {
+        return await Employee.findByIdAndDelete(id);
+      } catch (error) {
+        throw new Error('Error deleting employee');
       }
     },
   }

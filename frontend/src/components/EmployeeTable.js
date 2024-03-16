@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { GET_ALL_EMPLOYEES } from '../queries.js';
 import EmployeeFilters from './EmployeeFilters.js';
 import { Link, useParams } from 'react-router-dom';
+import EmployeeDelete from './EmployeeDelete.js';
 
 function EmployeeTable() {
   let { type } = useParams() || "";
@@ -48,7 +49,7 @@ function EmployeeTable() {
                 <td>{employee?.department}</td>
                 <td>{employee?.employeeType}</td>
                 <td>{employee?.currentStatus || '0'}</td>
-                <td><Link to={`/employeesDetail/${employee.id}`}>Detail</Link>{" "}<Link to={`/employees/update/${employee.id}`}>Update</Link></td>
+                <td><Link to={`/employeesDetail/${employee.id}`}>Detail</Link>{" "}<Link to={`/employees/update/${employee.id}`}>Update</Link><EmployeeDelete employeeId={employee.id} onDeleted={() => console.log('Employee deleted')} /></td>
               </tr>
             ))}
           </tbody>

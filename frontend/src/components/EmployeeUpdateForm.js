@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_EMPLOYEE_BY_ID, UPDATE_EMPLOYEE_MUTATION } from '../queries';
+import { GET_ALL_EMPLOYEES, GET_EMPLOYEE_BY_ID, UPDATE_EMPLOYEE_MUTATION } from '../queries';
+import { useNavigate } from 'react-router-dom';
 
 function EmployeeUpdateForm({ employeeId }) {
+    const navigate = useNavigate(); // Get the navigate function
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -18,18 +21,48 @@ function EmployeeUpdateForm({ employeeId }) {
         variables: { id: employeeId },
     });
 
+    const [updateEmployee, { loading, error }] = useMutation(UPDATE_EMPLOYEE_MUTATION, {
+        variables: { id: employeeId, ...formData },
+        onCompleted: () => {
+            navigate('/'); // Navigate back to the homepage or the route where the employee list is displayed
+        },
+        update: (cache, { data: { updateEmployee } }) => {
+            const existingEmployeesData = cache.readQuery({
+                query: GET_ALL_EMPLOYEES,
+                variables: { type: '' }
+            });
+
+            if (existingEmployeesData && existingEmployeesData.allEmployees) {
+                // Proceed to update the cache only if it's not null
+                cache.writeQuery({
+                    query: GET_ALL_EMPLOYEES,
+                    variables: { type: '' },
+                    data: {
+                        allEmployees: existingEmployeesData.allEmployees.map(emp =>
+                            emp.id === updateEmployee.id ? updateEmployee : emp
+                        ),
+                    },
+                });
+            }
+        },
+    });
+
     useEffect(() => {
         if (employeeData && employeeData.employee) {
-            setFormData({
-                ...formData,
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                firstName: employeeData.employee.firstName,
+                lastName: employeeData.employee.lastName,
+                age: employeeData.employee.age,
+                dateOfJoining: employeeData.employee.dateOfJoining,
                 title: employeeData.employee.title,
                 department: employeeData.employee.department,
                 currentStatus: Boolean(employeeData.employee.currentStatus),
-            });
+            }));
         }
     }, [employeeData]);
 
-    const [updateEmployee, { loading, error }] = useMutation(UPDATE_EMPLOYEE_MUTATION);
+    // const [updateEmployee, { loading, error }] = useMutation(UPDATE_EMPLOYEE_MUTATION);
 
     const handleSelectChange = (e) => {
         const { name, value } = e.target;
@@ -82,7 +115,8 @@ function EmployeeUpdateForm({ employeeId }) {
                     <option value="VP">VP</option>
                 </select>
             </div>
-            <div>                 <label>Department:</label>
+            <div>
+                <label>Department:</label>
                 <select name="department" value={formData.department} onChange={handleSelectChange}>
                     <option value="IT">IT</option>
                     <option value="Marketing">Marketing</option>

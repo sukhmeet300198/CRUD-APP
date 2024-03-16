@@ -4,20 +4,14 @@ import EmployeeDirectory from './components/EmployeeDirectory';
 import EmployeeCreate from './components/EmployeeCreate';
 import EmployeeDetail from './components/EmployeeDetail';
 import EmployeeUpdate from './components/EmployeeUpdate';
+import Header from './components/Header';
 
 function App() {
   return (
     <Router>
       <div>
         <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/create">Create Employee</Link>
-            </li>
-          </ul>
+        <Header />
         </nav>
 
         {/* Route Configuration for React Router */}
