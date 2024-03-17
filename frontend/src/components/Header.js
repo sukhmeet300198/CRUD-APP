@@ -7,8 +7,7 @@ function Header() {
 
   return (
     <div className="header">
-      <img src={logo} alt="Company Logo" className="logo" />
-      <Link to="/" className='link'>Home</Link>
+      <Link className="logo link" to="/" >Home</Link>
       <Link to="/create" className='link'>Create Employee</Link>
     </div>
   );

@@ -33,7 +33,7 @@ function EmployeeDelete({ employeeId, onDeleted }) {
     if (error) return <p>An error occurred: {error.message}</p>;
 
     return (
-        <button onClick={handleDelete}>Delete Employee</button>
+        <button className="action-links action-delete" onClick={handleDelete}>Delete Employee</button>
     );
 }
 

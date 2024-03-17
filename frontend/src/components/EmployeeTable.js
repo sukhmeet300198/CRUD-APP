@@ -29,8 +29,8 @@ function EmployeeTable() {
             <tr>
               <th>First Name</th>
               <th>Last Name</th>
-              <th>Age</th>
-              <th>Date of Joining</th>
+              {/* <th>Age</th>
+              <th>Date of Joining</th> */}
               <th>Title</th>
               <th>Department</th>
               <th>Employee Type</th>
@@ -43,13 +43,13 @@ function EmployeeTable() {
               <tr key={employee.id}>
                 <td>{employee?.firstName}</td>
                 <td>{employee?.lastName}</td>
-                <td>{employee?.age}</td>
-                <td>{new Date(employee?.dateOfJoining).toLocaleDateString()}</td>
+                {/* <td>{employee?.age}</td>
+                <td>{new Date(employee?.dateOfJoining).toLocaleDateString()}</td> */}
                 <td>{employee?.title}</td>
                 <td>{employee?.department}</td>
                 <td>{employee?.employeeType}</td>
                 <td>{employee?.currentStatus || '0'}</td>
-                <td><Link to={`/employeesDetail/${employee.id}`}>Detail</Link>{" "}<Link to={`/employees/update/${employee.id}`}>Update</Link><EmployeeDelete employeeId={employee.id} onDeleted={() => console.log('Employee deleted')} /></td>
+                <td><Link className="action-links" to={`/employeesDetail/${employee.id}`}>View</Link>{" "}<Link className="action-links" to={`/employees/update/${employee.id}`}>Update</Link><EmployeeDelete employeeId={employee.id} onDeleted={() => console.log('Employee deleted')} /></td>
               </tr>
             ))}
           </tbody>

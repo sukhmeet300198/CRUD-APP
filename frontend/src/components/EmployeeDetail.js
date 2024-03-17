@@ -1,8 +1,9 @@
 // EmployeeDetail.js
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { GET_EMPLOYEE_BY_ID } from '../queries';
+import "../css/EmployeeDetail.css"
 
 
 
@@ -18,18 +19,19 @@ function EmployeeDetail() {
   const employee = data?.employee;
 
   return (
-    <div>
+      <div className="employee-detail">
       <h2>Employee Detail</h2>
       {employee ? (
         <div>
-          <p>ID: {employee.id}</p>
-          <p>Name: {employee.firstName} {employee.lastName}</p>
-          <p>Age: {employee.age}</p>
-          <p>Date of Joining: {employee.dateOfJoining}</p>
-          <p>Title: {employee.title}</p>
-          <p>Department: {employee.department}</p>
-          <p>Type: {employee.employeeType}</p>
-          <p>Status: {employee.currentStatus ? 'Active' : 'Inactive'}</p>
+          <p><strong>ID:</strong> {employee.id}</p>
+          <p><strong>Name:</strong> {employee.firstName} {employee.lastName}</p>
+          <p><strong>Age:</strong> {employee.age}</p>
+          <p><strong>Date of Joining:</strong> {/*format(new Date(employee.dateOfJoining), 'PPP')*/employee.dateOfJoining}</p>
+          <p><strong>Title:</strong> {employee.title}</p>
+          <p><strong>Department:</strong> {employee.department}</p>
+          <p><strong>Type:</strong> {employee.employeeType}</p>
+          <p><strong>Status:</strong> {employee.currentStatus ? 'Active' : 'Inactive'}</p>
+          <Link to="/">BACK TO HOME</Link>
         </div>
       ) : (
         <p>Employee not found.</p>

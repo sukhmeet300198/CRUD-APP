@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_EMPLOYEES, GET_EMPLOYEE_BY_ID, UPDATE_EMPLOYEE_MUTATION } from '../queries';
 import { useNavigate } from 'react-router-dom';
+import '../css/EmployeeUpdate.css';
 
 function EmployeeUpdateForm({ employeeId }) {
     const navigate = useNavigate(); // Get the navigate function
@@ -89,48 +90,49 @@ function EmployeeUpdateForm({ employeeId }) {
     if (error || employeeError) return <p>Error: {error?.message || employeeError?.message}</p>;
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>First Name:</label>
-                <input type="text" value={formData.firstName} disabled />
-            </div>
-            <div>
-                <label>Last Name:</label>
-                <input type="text" value={formData.lastName} disabled />
-            </div>
-            <div>
-                <label>Age:</label>
-                <input type="text" value={formData.age} disabled />
-            </div>
-            <div>
-                <label>Date of Joining:</label>
-                <input type="date" value={formData.dateOfJoining} disabled />
-            </div>
-            <div>
-                <label>Title:</label>
-                <select name="title" value={formData.title} onChange={handleSelectChange}>
-                    <option value="Employee">Employee</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Director">Director</option>
-                    <option value="VP">VP</option>
-                </select>
-            </div>
-            <div>
-                <label>Department:</label>
-                <select name="department" value={formData.department} onChange={handleSelectChange}>
-                    <option value="IT">IT</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="HR">HR</option>
-                    <option value="Engineering">Engineering</option>
-                </select>
-            </div>
-            <div>
-                <label>
-                    <input type="checkbox" name="currentStatus" checked={formData.currentStatus} onChange={handleStatusChange} /> Current Status
-                </label>
-            </div>
-            <button type="submit">Update Employee</button>
-        </form>
+        <div className="form-container">
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>First Name:</label>
+                    <input type="text" value={formData.firstName} disabled />
+                </div>
+                <div>
+                    <label>Last Name:</label>
+                    <input type="text" value={formData.lastName} disabled />
+                </div>
+                <div>
+                    <label>Age:</label>
+                    <input type="text" value={formData.age} disabled />
+                </div>
+                <div>
+                    <label>Date of Joining:</label>
+                    <input type="date" value={formData.dateOfJoining} disabled />
+                </div>
+                <div>
+                    <label>Title:</label>
+                    <select name="title" value={formData.title} onChange={handleSelectChange}>
+                        <option value="Employee">Employee</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Director">Director</option>
+                        <option value="VP">VP</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Department:</label>
+                    <select name="department" value={formData.department} onChange={handleSelectChange}>
+                        <option value="IT">IT</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="HR">HR</option>
+                        <option value="Engineering">Engineering</option>
+                    </select>
+                </div>
+                <div className="form-checkbox-group">
+                    <label> Current Status</label>
+                    <input type="checkbox" name="currentStatus" checked={formData.currentStatus} onChange={handleStatusChange} />
+                </div>
+                <button type="submit">Update Employee</button>
+            </form>
+        </div>
     );
 }
 

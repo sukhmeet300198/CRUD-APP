@@ -1,0 +1,23 @@
+.employee-detail {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .employee-detail h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .employee-detail p {
+    margin: 10px 0;
+    line-height: 1.5;
+  }
+  
+  .employee-detail p strong {
+    font-weight: bold;
+  }
+  
