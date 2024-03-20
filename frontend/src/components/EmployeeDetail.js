@@ -1,11 +1,8 @@
-// EmployeeDetail.js
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Link, useParams } from 'react-router-dom';
 import { GET_EMPLOYEE_BY_ID } from '../queries';
-import "../css/EmployeeDetail.css"
-
-
+import "../css/EmployeeDetail.css";
 
 function EmployeeDetail() {
   let { id } = useParams();
@@ -19,20 +16,24 @@ function EmployeeDetail() {
   const employee = data?.employee;
 
   return (
-      <div className="employee-detail">
+    <div className="employee-detail">
       <h2>Employee Detail</h2>
-      {employee ? (
-        <div>
-          <p><strong>ID:</strong> {employee.id}</p>
-          <p><strong>Name:</strong> {employee.firstName} {employee.lastName}</p>
-          <p><strong>Age:</strong> {employee.age}</p>
-          <p><strong>Date of Joining:</strong> {/*format(new Date(employee.dateOfJoining), 'PPP')*/employee.dateOfJoining}</p>
-          <p><strong>Title:</strong> {employee.title}</p>
-          <p><strong>Department:</strong> {employee.department}</p>
-          <p><strong>Type:</strong> {employee.employeeType}</p>
-          <p><strong>Status:</strong> {employee.currentStatus ? 'Active' : 'Inactive'}</p>
-          <Link to="/">BACK TO HOME</Link>
+      {employee ? (<>
+        <table>
+          <tbody>
+            <tr><th>Name</th><td>{employee.firstName} {employee.lastName}</td></tr>
+            <tr><th>Age</th><td>{employee.age}</td></tr>
+            <tr><th>Date of Joining</th><td>{employee.dateOfJoining}</td></tr>
+            <tr><th>Title</th><td>{employee.title}</td></tr>
+            <tr><th>Department</th><td>{employee.department}</td></tr>
+            <tr><th>Type</th><td>{employee.employeeType}</td></tr>
+            <tr><th>Status</th><td>{employee.currentStatus ? 'Active' : 'Inactive'}</td></tr>
+          </tbody>
+        </table>
+        <div className="button-container">
+          <Link to="/" className="back-to-home-btn">BACK TO HOME</Link>
         </div>
+      </>
       ) : (
         <p>Employee not found.</p>
       )}

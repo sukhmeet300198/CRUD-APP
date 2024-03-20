@@ -19,10 +19,13 @@ function EmployeeTable() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+   // Filtering employees by type if needed
+   const employeesToShow = employeeType ? data.allEmployees.filter(employee => employee.employeeType === employeeType) : data.allEmployees;
+console.log("+++++++0",Object.keys(data.allEmployees) )
   return (
     <>
       <EmployeeFilters />
-      {data ? <>
+      {employeesToShow.length > 0 ?  <>
         <h1>EMPLOYEES LIST</h1>
         <table>
           <thead>
@@ -56,7 +59,7 @@ function EmployeeTable() {
         </table>
       </>
 
-        : <div className='enterEmp'>ENTER NEW EMPLOYEES IN TABLE</div>
+        : <div className='enterEmp'><h2>ENTER NEW EMPLOYEES IN TABLE</h2></div>
       }
     </>
 

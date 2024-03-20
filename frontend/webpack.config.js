@@ -2,20 +2,22 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js', // Your entry point
+  entry: './src/index.js', // Your entry point file
   output: {
     path: path.resolve(__dirname, 'dist'), // Output directory
-    filename: 'bundle.js', // Output file name
-    publicPath: '/' // Necessary for React Router
+    filename: 'bundle.js', // Output bundle file
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, // JavaScript and JSX files
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-        },
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'] // This line is optional if you have a separate Babel config
+          }
+        }
       },
       {
         test: /\.css$/, // CSS files
@@ -29,15 +31,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html', // Path to your HTML template
+      template: './src/public/index.html', // Path to your HTML template
     }),
   ],
-  resolve: {
-    extensions: ['.js', '.jsx'], // Resolve these extensions
-  },
-  devServer: {
-    historyApiFallback: true, // For React Router
-    contentBase: './dist',
-    hot: true,
-  },
 };
