@@ -39,12 +39,11 @@ const resolvers = {
         const formattedRetirementDate = formatISO(retirementDate);
 
         let yearsLeft = 0, monthsLeft = 0, daysLeft = 0;
-      console.log("data------------",new Date(formattedRetirementDate)+"-------"+new Date(formattedCurrentDate)+"++++++++0",new Date(formattedRetirementDate) > new Date(formattedCurrentDate))
+
         if (new Date(formattedRetirementDate) > new Date(formattedCurrentDate)) {
           yearsLeft = differenceInYears(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate));
           monthsLeft = differenceInMonths(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate)) % 12;
           daysLeft = differenceInDays(parseISO(formattedRetirementDate), addYears(parseISO(formattedCurrentDate), yearsLeft)) % 30;
-          console.log("checkkk-----------0",yearsLeft,monthsLeft,daysLeft)
         }
 
         employee.retirementDetails = {
@@ -60,7 +59,7 @@ const resolvers = {
       }
     },
     upcomingRetirements: async (_, { withinMonths, employeeType }) => {
-      console.log("emptyep---",employeeType)
+      console.log("emptyep---", employeeType)
       const currentDate = new Date();
       const allEmployees = await Employee.find(employeeType ? { employeeType } : {});
       return allEmployees.filter(employee => {

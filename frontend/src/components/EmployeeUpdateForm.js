@@ -72,7 +72,7 @@ function EmployeeUpdateForm({ employeeId }) {
 
     const handleStatusChange = (e) => {
         const isChecked = e.target.checked; // This will be true or false
-        console.log("=============",!!isChecked)
+        console.log("=============", !!isChecked)
         setFormData({ ...formData, currentStatus: isChecked }); // Convert to boolean explicitly if needed
     };
 

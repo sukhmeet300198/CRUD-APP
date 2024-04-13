@@ -2,12 +2,8 @@
   width: 120px;
   padding: 0.375rem 0.75rem; 
 }
-.custom-view-btn {
-  background-color: #4CAF50; /* Green */
-  color: white;
-}
 
-.custom-update-btn {
+.custom-del-btn {
   background-color: #f44336; /* Red */
   color: white;
 }
