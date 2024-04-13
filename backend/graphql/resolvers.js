@@ -59,7 +59,7 @@ const resolvers = {
       }
     },
     upcomingRetirements: async (_, { withinMonths, employeeType }) => {
-      console.log("emptyep---", employeeType)
+      
       const currentDate = new Date();
       const allEmployees = await Employee.find(employeeType ? { employeeType } : {});
       return allEmployees.filter(employee => {

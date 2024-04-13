@@ -1,30 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_EMPLOYEES } from '../queries.js';
 import EmployeeFilters from './EmployeeFilters.js';
 import { Link, useParams } from 'react-router-dom';
 import EmployeeDelete from './EmployeeDelete.js';
 import "../css/EmployeeTable.css"
+import EmployeeSearch from './EmployeeSearch.js';
 import { Table, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 
 function EmployeeTable() {
   let { type } = useParams() || "";
+  const [searchTerm, setSearchTerm] = useState('');
   let employeeType = type && type !== undefined ? type : '';
 
   const { loading, error, data } = useQuery(GET_ALL_EMPLOYEES, {
     variables: { type: employeeType || '' },
   });
+  
+  const handleSearch = (term) => {
+    setSearchTerm(term.toLowerCase());
+  };
 
   if (loading) return <Alert variant="info">Loading...</Alert>;
   if (error) return <Alert variant="danger">Error: {error.message}</Alert>;
 
-  const employeesToShow = employeeType ? data.allEmployees.filter(employee => employee.employeeType === employeeType) : data.allEmployees;
+  const employeesToShow = data && data.allEmployees.filter(employee => {
+    return (
+      employee.firstName.toLowerCase().includes(searchTerm) ||
+      employee.lastName.toLowerCase().includes(searchTerm) ||
+      employee.title.toLowerCase().includes(searchTerm) ||
+      employee.department.toLowerCase().includes(searchTerm) ||
+      employee.employeeType.toLowerCase().includes(searchTerm)
+    );
+  });
 
+  if (loading) return <Alert variant="info">Loading...</Alert>;
+  if (error) return <Alert variant="danger">Error: {error.message}</Alert>;
+ 
   return (
     <Container>
       <Row>
         <Col>
           <EmployeeFilters />
+          <EmployeeSearch onSearch={handleSearch} />
           {employeesToShow.length > 0 ? (
             <>
               <h1>EMPLOYEES LIST</h1>

@@ -15,7 +15,7 @@ function UpcomingRetirements({ employeeType }) {
   return (
     <>
       {
-        data.upcomingRetirements != null ?
+        data.upcomingRetirements != null  && data.upcomingRetirements.length >0?
           <Table striped bordered hover>
             <thead>
               <tr>
