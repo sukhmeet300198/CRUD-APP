@@ -58,7 +58,7 @@ function EmployeeUpdateForm({ employeeId }) {
                 dateOfJoining: employeeData.employee.dateOfJoining,
                 title: employeeData.employee.title,
                 department: employeeData.employee.department,
-                currentStatus: Boolean(employeeData.employee.currentStatus),
+                currentStatus: (employeeData.employee.currentStatus),
             }));
         }
     }, [employeeData]);
@@ -72,7 +72,8 @@ function EmployeeUpdateForm({ employeeId }) {
 
     const handleStatusChange = (e) => {
         const isChecked = e.target.checked; // This will be true or false
-        setFormData({ ...formData, currentStatus: !!isChecked }); // Convert to boolean explicitly if needed
+        console.log("=============",!!isChecked)
+        setFormData({ ...formData, currentStatus: isChecked }); // Convert to boolean explicitly if needed
     };
 
     const handleSubmit = async (e) => {

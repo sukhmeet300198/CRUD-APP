@@ -15,6 +15,8 @@ function EmployeeDetail() {
 
   const employee = data?.employee;
 
+  const { years, months, days } = employee.retirementDetails || { years: 0, months: 0, days: 0 };  // Fallback to zeros
+
   return (
     <div className="employee-detail">
       <h2>Employee Detail</h2>
@@ -28,6 +30,7 @@ function EmployeeDetail() {
             <tr><th>Department</th><td>{employee.department}</td></tr>
             <tr><th>Type</th><td>{employee.employeeType}</td></tr>
             <tr><th>Status</th><td>{employee.currentStatus ? 'Active' : 'Inactive'}</td></tr>
+            <tr><th>Retirement</th><td>Retirement in: {years} years, {months} months, and {days} days</td></tr>
           </tbody>
         </table>
         <div className="button-container">

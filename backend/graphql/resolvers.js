@@ -1,4 +1,5 @@
 const Employee = require('../model/EmployeeModel.js');
+const { parseISO, addYears, differenceInYears, differenceInMonths, differenceInDays, formatISO } = require('date-fns');
 
 const resolvers = {
   Query: {
@@ -23,11 +24,50 @@ const resolvers = {
         if (!employee) {
           throw new Error('Employee not found');
         }
+
+        if (!employee.dateOfJoining || !employee.age) {
+          throw new Error('Required employee data (date of joining or age at joining) is missing');
+        }
+
+        const dateOfJoining = parseISO(employee.dateOfJoining);
+        const yearsToWork = 60 - employee.age;
+        const retirementDate = addYears(dateOfJoining, yearsToWork);
+        const currentDate = new Date();
+
+        // Convert both dates to ISO strings to ensure consistent formatting for comparison
+        const formattedCurrentDate = formatISO(currentDate);
+        const formattedRetirementDate = formatISO(retirementDate);
+
+        let yearsLeft = 0, monthsLeft = 0, daysLeft = 0;
+      console.log("data------------",new Date(formattedRetirementDate)+"-------"+new Date(formattedCurrentDate)+"++++++++0",new Date(formattedRetirementDate) > new Date(formattedCurrentDate))
+        if (new Date(formattedRetirementDate) > new Date(formattedCurrentDate)) {
+          yearsLeft = differenceInYears(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate));
+          monthsLeft = differenceInMonths(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate)) % 12;
+          daysLeft = differenceInDays(parseISO(formattedRetirementDate), addYears(parseISO(formattedCurrentDate), yearsLeft)) % 30;
+          console.log("checkkk-----------0",yearsLeft,monthsLeft,daysLeft)
+        }
+
+        employee.retirementDetails = {
+          years: yearsLeft,
+          months: monthsLeft,
+          days: daysLeft
+        };
+
         return employee;
       } catch (error) {
-        console.log(error);
-        throw new Error('Error fetching employee');
+        console.error('Error fetching employee details:', error);
+        throw new Error('Error fetching employee details: ' + error.message);
       }
+    },
+    upcomingRetirements: async (_, { withinMonths, employeeType }) => {
+      console.log("emptyep---",employeeType)
+      const currentDate = new Date();
+      const allEmployees = await Employee.find(employeeType ? { employeeType } : {});
+      return allEmployees.filter(employee => {
+        const dateOfJoining = parseISO(employee.dateOfJoining);
+        const retirementDate = addYears(dateOfJoining, 60 - employee.age);
+        return differenceInMonths(retirementDate, currentDate) <= withinMonths;
+      });
     },
   },
   Mutation: {

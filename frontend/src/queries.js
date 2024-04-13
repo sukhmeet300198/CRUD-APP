@@ -12,6 +12,11 @@ export const GET_ALL_EMPLOYEES = gql`
       department
       employeeType
       currentStatus
+      retirementDetails {
+        years
+        months
+        days
+      }
     }
   }
 `;
@@ -28,6 +33,11 @@ query GetEmployeeById($id: ID!) {
     department
     employeeType
     currentStatus
+    retirementDetails {
+      years
+      months
+      days
+    }
   }
 }
 `;
@@ -54,6 +64,22 @@ export const UPDATE_EMPLOYEE_MUTATION = gql`
 export const DELETE_EMPLOYEE_MUTATION = gql`
   mutation DeleteEmployee($id: ID!) {
     deleteEmployee(id: $id) {
+      id
+      firstName
+      lastName
+      age
+      dateOfJoining
+      title
+      department
+      employeeType
+      currentStatus
+    }
+  }
+`;
+
+export const GET_UPCOMING_RETIREMENTS = gql`
+  query GetUpcomingRetirements($withinMonths: Int!) {
+    upcomingRetirements(withinMonths: $withinMonths) {
       id
       firstName
       lastName

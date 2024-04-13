@@ -4,6 +4,13 @@ const typeDefs = gql`
   type Query {
     allEmployees(type: String): [Employee]
     employee(id: ID!): Employee
+    upcomingRetirements(withinMonths: Int!, employeeType: String): [Employee]
+  }
+
+  type RetirementDetails {
+    years: Int
+    months: Int
+    days: Int
   }
   
   type Mutation {
@@ -37,6 +44,7 @@ const typeDefs = gql`
     department: String!
     employeeType: String!
     currentStatus: Int!
+    retirementDetails: RetirementDetails
   }
 `;
 

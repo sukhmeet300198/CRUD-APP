@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation } from '@apollo/client';
 import { DELETE_EMPLOYEE_MUTATION, GET_ALL_EMPLOYEES } from '../queries';
 
-function EmployeeDelete({ employeeId, onDeleted }) {
+function EmployeeDelete({ employeeId, currentStatus, onDeleted }) {
     const [deleteEmployee, { loading, error }] = useMutation(DELETE_EMPLOYEE_MUTATION, {
         variables: { id: employeeId },
         update(cache) {
@@ -24,6 +24,12 @@ function EmployeeDelete({ employeeId, onDeleted }) {
     });
 
     const handleDelete = () => {
+        // Check if the employee's current status is active
+        if (currentStatus) {
+            alert("CAN'T DELETE EMPLOYEE – STATUS ACTIVE");
+            return;
+        }
+
         if (window.confirm('Are you sure you want to delete this employee?')) {
             deleteEmployee();
         }
@@ -33,7 +39,7 @@ function EmployeeDelete({ employeeId, onDeleted }) {
     if (error) return <p>An error occurred: {error.message}</p>;
 
     return (
-        <button className="action-links action-delete" onClick={handleDelete}>Delete Employee</button>
+        <button className="custom-del-btn" onClick={handleDelete}>Delete Employee</button>
     );
 }
 

@@ -5,6 +5,7 @@ import EmployeeCreate from './components/EmployeeCreate';
 import EmployeeDetail from './components/EmployeeDetail';
 import EmployeeUpdate from './components/EmployeeUpdate';
 import Header from './components/Header';
+import UpcomingRetirements from './components/UpcomingRetirements';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/employees/update/:employeeId" element={<EmployeeUpdate />} />
           <Route path="/employeesDetail/:id" element={<EmployeeDetail />} />
           <Route path="/employees/:type" element={<EmployeeDirectory />} />
+          <Route path="/upcoming-retirements" element={<UpcomingRetirements />} />
           <Route path="/" element={<EmployeeDirectory />} />
         </Routes>
       </div>

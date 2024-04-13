@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import '../css/EmployeeDirectory.css';
+import { Container } from 'react-bootstrap';
 import EmployeeTable from './EmployeeTable';
 
 
 function EmployeeDirectory() {
   
   return (
-    <div className="employee-directory-container">
+    <Container className="p-3">
       <EmployeeTable />
-    </div>
+    </Container>
   );
 }
 
