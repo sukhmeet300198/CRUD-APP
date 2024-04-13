@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
-import '../css/EmployeeCreate.css';
 import { CREATE_EMPLOYEE_MUTATION, GET_ALL_EMPLOYEES } from '../queries.js';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 
 function EmployeeCreate(props) {
 
@@ -101,51 +101,59 @@ function EmployeeCreate(props) {
   if (error) return <p>Error </p>;
 
   return (
-    <div className='employee-create-modal'>
-      <h1>Create Employee</h1>
-      <form onSubmit={handleSubmit} className="employee-create-form">
-        <input name="firstName" type="text" placeholder="First Name" onChange={handleInputChange} onBlur={handleBlur} />
-        <div className='error-message'>{errors.firstName}</div>
+    <Container className="mt-5">
+      <Row>
+        <Col md={{ span: 6, offset: 3 }} style={{ backgroundColor: 'lightblue', border: '1px solid #007bff', padding: '20px', borderRadius: '5px' }}>
+          <h1>Create Employee</h1>
+          {error && <Alert variant="danger">{error.message}</Alert>}
+          <form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <input name="firstName" type="text" placeholder="First Name" onChange={handleInputChange} onBlur={handleBlur} />
+              <div className='error-message'>{errors.firstName}</div>
 
-        <input name="lastName" type="text" placeholder="Last Name" onChange={handleInputChange} onBlur={handleBlur} />
-        <div className='error-message'>{errors.lastName}</div>
+              <input name="lastName" type="text" placeholder="Last Name" onChange={handleInputChange} onBlur={handleBlur} />
+              <div className='error-message'>{errors.lastName}</div>
 
-        <input name="age" type="number" placeholder="Age" onChange={handleInputChange} onBlur={handleBlur} />
-        <div className='error-message'>{errors.age}</div>
+              <input name="age" type="number" placeholder="Age" onChange={handleInputChange} />
+              <div className='error-message'>{errors.age}</div>
 
-        <input name="dateOfJoining" type="date" onChange={handleInputChange} onBlur={handleBlur} />
-        <div className='error-message'>{errors.dateOfJoining}</div>
+              <input name="dateOfJoining" type="date" onChange={handleInputChange} onBlur={handleBlur} />
+              <div className='error-message'>{errors.dateOfJoining}</div>
 
-        <select name="title" onChange={handleInputChange} onBlur={handleBlur}>
-          <option value="none" selected disabled hidden>Select Type of Employee</option>
-          <option value="Employee">Employee</option>
-          <option value="Manager">Manager</option>
-          <option value="Director">Director</option>
-          <option value="VP">VP</option>
-        </select>
-        <div className='error-message'>{errors.title}</div>
+              <select name="title" onChange={handleInputChange} onBlur={handleBlur}>
+                <option value="none" selected disabled hidden>Select Type of Employee</option>
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="Director">Director</option>
+                <option value="VP">VP</option>
+              </select>
+              <div className='error-message'>{errors.title}</div>
 
-        <select name="department" onChange={handleInputChange} onBlur={handleBlur}>
-          <option value="none" selected disabled hidden>Select Department of Employee</option>
-          <option value="IT">IT</option>
-          <option value="Marketing">Marketing</option>
-          <option value="HR">HR</option>
-          <option value="Engineering">Engineering</option>
-        </select>
-        <div className='error-message'>{errors.department}</div>
+              <select name="department" onChange={handleInputChange} onBlur={handleBlur}>
+                <option value="none" selected disabled hidden>Select Department of Employee</option>
+                <option value="IT">IT</option>
+                <option value="Marketing">Marketing</option>
+                <option value="HR">HR</option>
+                <option value="Engineering">Engineering</option>
+              </select>
+              <div className='error-message'>{errors.department}</div>
 
-        <select name="employeeType" onChange={handleInputChange} onBlur={handleBlur}>
-          <option value="none" selected disabled hidden>Select Employee Type</option>
-          <option value="FullTime">Full Time</option>
-          <option value="PartTime">Part Time</option>
-          <option value="Contract">Contract</option>
-          <option value="Seasonal">Seasonal</option>
-        </select>
-        <div className='error-message'>{errors.employeeType}</div>
-
-        <button type="submit">Create Employee</button>
-      </form>
-    </div>
+              <select name="employeeType" onChange={handleInputChange} onBlur={handleBlur}>
+                <option value="none" selected disabled hidden>Select Employee Type</option>
+                <option value="FullTime">Full Time</option>
+                <option value="PartTime">Part Time</option>
+                <option value="Contract">Contract</option>
+                <option value="Seasonal">Seasonal</option>
+              </select>
+              <div className='error-message'>{errors.employeeType}</div>
+              <div className="d-grid">
+                <Button variant="primary" type="submit" disabled={loading}>Create Employee</Button>
+              </div>
+            </Form.Group >
+          </form>
+        </Col>
+      </Row>
+    </Container>
 
   );
 }

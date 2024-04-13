@@ -13,7 +13,7 @@ function EmployeeSearch({ onSearch }) {
         placeholder="Search by name, title, or department..."
         onChange={handleSearchChange}
       />
-     
+
     </InputGroup>
   );
 }

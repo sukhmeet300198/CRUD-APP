@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_EMPLOYEES, GET_EMPLOYEE_BY_ID, UPDATE_EMPLOYEE_MUTATION } from '../queries';
 import { useNavigate } from 'react-router-dom';
+import { Form, Button, Container, Alert, Row, Col } from 'react-bootstrap';
 import '../css/EmployeeUpdate.css';
 
 function EmployeeUpdateForm({ employeeId }) {
@@ -58,7 +59,7 @@ function EmployeeUpdateForm({ employeeId }) {
                 dateOfJoining: employeeData.employee.dateOfJoining,
                 title: employeeData.employee.title,
                 department: employeeData.employee.department,
-                currentStatus: (employeeData.employee.currentStatus),
+                currentStatus: Boolean(employeeData.employee.currentStatus),
             }));
         }
     }, [employeeData]);
@@ -72,7 +73,6 @@ function EmployeeUpdateForm({ employeeId }) {
 
     const handleStatusChange = (e) => {
         const isChecked = e.target.checked; // This will be true or false
-        console.log("=============", !!isChecked)
         setFormData({ ...formData, currentStatus: isChecked }); // Convert to boolean explicitly if needed
     };
 
@@ -91,50 +91,55 @@ function EmployeeUpdateForm({ employeeId }) {
     if (error || employeeError) return <p>Error: {error?.message || employeeError?.message}</p>;
 
     return (
-        <div className="form-container">
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>First Name:</label>
-                    <input type="text" value={formData.firstName} disabled />
-                </div>
-                <div>
-                    <label>Last Name:</label>
-                    <input type="text" value={formData.lastName} disabled />
-                </div>
-                <div>
-                    <label>Age:</label>
-                    <input type="text" value={formData.age} disabled />
-                </div>
-                <div>
-                    <label>Date of Joining:</label>
-                    <input type="date" value={formData.dateOfJoining} disabled />
-                </div>
-                <div>
-                    <label>Title:</label>
-                    <select name="title" value={formData.title} onChange={handleSelectChange}>
-                        <option value="Employee">Employee</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Director">Director</option>
-                        <option value="VP">VP</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Department:</label>
-                    <select name="department" value={formData.department} onChange={handleSelectChange}>
-                        <option value="IT">IT</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="HR">HR</option>
-                        <option value="Engineering">Engineering</option>
-                    </select>
-                </div>
-                <div className="form-checkbox-group">
-                    <label> Current Status</label>
-                    <input type="checkbox" name="currentStatus" checked={formData.currentStatus} onChange={handleStatusChange} />
-                </div>
-                <button type="submit">Update Employee</button>
-            </form>
-        </div>
-    );
+        <Container>
+            <Row>
+                <Col md={8} className="offset-md-2">
+                    {/* <div className="form-container"> */}
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-1">
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter first name" name="firstName" value={formData.firstName} onChange={handleSelectChange} disabled />
+                        </Form.Group>
+                        <Form.Group className="mb-1">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter last name" name="lastName" value={formData.lastName} onChange={handleSelectChange} disabled />
+                        </Form.Group>
+                        <Form.Group className="mb-1">
+                            <Form.Label>Age</Form.Label>
+                            <Form.Control type="number" name="age" value={formData.age} onChange={handleSelectChange} disabled />
+                        </Form.Group>
+                        <Form.Group className="mb-1">
+                            <Form.Label>Date of Joining</Form.Label>
+                            <Form.Control type="date" name="dateOfJoining" value={formData.dateOfJoining} onChange={handleSelectChange} disabled />
+                        </Form.Group>
+                        <Form.Group className="mb-1">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Select name="title" value={formData.title} onChange={handleSelectChange}>
+                                <option value="Employee">Employee</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Director">Director</option>
+                                <option value="VP">VP</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-1">
+                            <Form.Label>Department</Form.Label>
+                            <Form.Select name="department" value={formData.department} onChange={handleSelectChange}>
+                                <option value="IT">IT</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="HR">HR</option>
+                                <option value="Engineering">Engineering</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-1">
+                            <Form.Check type="checkbox" label="Current Status" name="currentStatus" checked={formData.currentStatus} onChange={handleStatusChange} />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">Update Employee</Button>
+                    </Form>
+                    {/* </div> */}
+                </Col>
+            </Row>
+
+        </Container>);
 }
 
 export default EmployeeUpdateForm;

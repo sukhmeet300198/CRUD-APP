@@ -3,6 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 import { Link, useParams } from 'react-router-dom';
 import { GET_EMPLOYEE_BY_ID } from '../queries';
 import "../css/EmployeeDetail.css";
+import { Container, Row, Col, Table, Button, Alert } from 'react-bootstrap'
 
 function EmployeeDetail() {
   let { id } = useParams();
@@ -18,29 +19,35 @@ function EmployeeDetail() {
   const { years, months, days } = employee.retirementDetails || { years: 0, months: 0, days: 0 };  // Fallback to zeros
 
   return (
-    <div className="employee-detail">
-      <h2>Employee Detail</h2>
-      {employee ? (<>
-        <table>
-          <tbody>
-            <tr><th>Name</th><td>{employee.firstName} {employee.lastName}</td></tr>
-            <tr><th>Age</th><td>{employee.age}</td></tr>
-            <tr><th>Date of Joining</th><td>{employee.dateOfJoining}</td></tr>
-            <tr><th>Title</th><td>{employee.title}</td></tr>
-            <tr><th>Department</th><td>{employee.department}</td></tr>
-            <tr><th>Type</th><td>{employee.employeeType}</td></tr>
-            <tr><th>Status</th><td>{employee.currentStatus ? 'Active' : 'Inactive'}</td></tr>
-            <tr><th>Retirement</th><td>Retirement in: {years} years, {months} months, and {days} days</td></tr>
-          </tbody>
-        </table>
-        <div className="button-container">
-          <Link to="/" className="back-to-home-btn">BACK TO HOME</Link>
-        </div>
-      </>
-      ) : (
-        <p>Employee not found.</p>
-      )}
-    </div>
+    <Container className="mt-4">
+      <Row>
+        <Col>
+          <h2 className='center-text'>Employee Detail</h2>
+          {employee ? (
+            <>
+              <Table striped bordered hover style={{ width: '60%', margin: '0 auto' }}>
+                <tbody>
+                  <tr><th>Name</th><td>{employee.firstName} {employee.lastName}</td></tr>
+                  <tr><th>Age</th><td>{employee.age}</td></tr>
+                  <tr><th>Date of Joining</th><td>{employee.dateOfJoining}</td></tr>
+                  <tr><th>Title</th><td>{employee.title}</td></tr>
+                  <tr><th>Department</th><td>{employee.department}</td></tr>
+                  <tr><th>Type</th><td>{employee.employeeType}</td></tr>
+                  <tr><th>Status</th><td>{employee.currentStatus ? 'Active' : 'Inactive'}</td></tr>
+                  <tr><th>Retirement</th><td>Retirement in: {years} years, {months} months, and {days} days</td></tr>
+                </tbody>
+              </Table>
+              <div className="d-grid gap-2">
+                <Button variant="primary" as={Link} to="/" className="full-width-button">Back to Home</Button>
+              </div>
+            </>
+          ) : (
+            <Alert variant="secondary">Employee not found.</Alert>
+          )}
+        </Col>
+      </Row>
+    </Container>
+
   );
 }
 

@@ -1,6 +1,7 @@
 // EmployeeFilters.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Form, Container, Row, Col } from 'react-bootstrap';
 
 function EmployeeFilters() {
   let navigate = useNavigate();
@@ -14,16 +15,24 @@ function EmployeeFilters() {
   };
 
   return (
-    <div>
-      <select onChange={handleChange}>
-        <option value="">All Employees</option>
-        <option value="FullTime">Full Time</option>
-        <option value="PartTime">Part Time</option>
-        <option value="Contract">Contract</option>
-        <option value="Seasonal">Seasonal</option>
-        <option value="Retirement">Retirement</option>
-      </select>
-    </div>
+    <Container className="mt-3">
+      <Row>
+        <Col>
+          <Form>
+            <Form.Group controlId="employeeFilter">
+              <Form.Select aria-label="Employee filter" onChange={handleChange} style={{height: "47px"}}>
+                <option value="">All Employees</option>
+                <option value="FullTime">Full Time</option>
+                <option value="PartTime">Part Time</option>
+                <option value="Contract">Contract</option>
+                <option value="Seasonal">Seasonal</option>
+                <option value="Retirement">Retirement</option>
+              </Form.Select>
+            </Form.Group>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

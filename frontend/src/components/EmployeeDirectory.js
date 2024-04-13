@@ -4,7 +4,7 @@ import EmployeeTable from './EmployeeTable';
 
 
 function EmployeeDirectory() {
-  
+
   return (
     <Container className="p-3">
       <EmployeeTable />

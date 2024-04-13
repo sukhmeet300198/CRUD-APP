@@ -11,4 +11,8 @@
 
 ----for backend
     Sukhmeet_Assignment1/backend> npm run dev
+
+
+ADDITIONAL FUNCTIONALITY
+User can search the content by name, title, department
     

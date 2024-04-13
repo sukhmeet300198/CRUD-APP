@@ -1,62 +1,15 @@
-.employee-detail {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* EmployeeDetail.css */
+.small-width-table {
+  width: 60%;
+  margin: 0 auto;  
 }
 
-.employee-detail h2 {
-  text-align: center;
+.center-text {
+  text-align: center; 
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-td {
-  padding: 8px;
-  border: 1px solid #ddd;
-}
-
-tr:nth-child(even){background-color: #f2f2f2;}
-
-/* tr:hover {background-color: #ddd;} */
-
-.back-to-home-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  color: #fff;
-  background-color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-  /* No changes needed here for centering */
-}
-
-.button-container {
-  text-align: center;
-  margin-top: 20px; /* Adjust spacing as needed */
-}
-
-.back-to-home-btn:hover {
-  background-color: #0056b3;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  text-align: left;
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #f0f0f0;
+.full-width-button {
+  width: 60%;  
+  margin: 20px auto; 
+  display: block;  
 }
