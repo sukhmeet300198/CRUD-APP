@@ -25,7 +25,7 @@ const resolvers = {
           throw new Error('Employee not found');
         }
 
-        if (!employee.dateOfJoining || !employee.age) {
+        if (!employee.dateOfJoining || !employee.dateOfBirth) {
           throw new Error('Required employee data (date of joining or age at joining) is missing');
         }
 
@@ -46,16 +46,16 @@ const resolvers = {
           yearsLeft = differenceInYears(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate));
           monthsLeft = differenceInMonths(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate)) % 12;
           daysLeft = differenceInDays(parseISO(formattedRetirementDate), addYears(parseISO(formattedCurrentDate), yearsLeft)) % 30;
-                  }
+        }
 
 
-        employee.retirementDate=formattedRetirementDate
+        employee.retirementDate = formattedRetirementDate
         employee.retirementDetails = {
           years: yearsLeft,
           months: monthsLeft,
-          days: daysLeft 
+          days: daysLeft
         };
-        
+
         return employee;
       } catch (error) {
         console.error('Error fetching employee details:', error);
@@ -86,10 +86,14 @@ const resolvers = {
     },
   },
   Mutation: {
-    createEmployee: async (_, { firstName, lastName, age, dateOfJoining, dateOfBirth, title, department, employeeType }) => {
-      if (!firstName || !lastName || !dateOfJoining || !age || !title || !department || !employeeType || !dateOfBirth) {
+    createEmployee: async (_, { firstName, lastName, dateOfJoining, dateOfBirth, title, department, employeeType }) => {
+      if (!firstName || !lastName || !dateOfJoining || !dateOfBirth || !title || !department || !employeeType || !dateOfBirth) {
         throw new Error('All fields are required');
       }
+
+      const dob = parseISO(dateOfBirth);
+      const currentDate = new Date();
+      const age = differenceInYears(currentDate, dob);
 
       if (age < 20 || age > 70) {
         throw new Error('Age must be between 20 and 60');

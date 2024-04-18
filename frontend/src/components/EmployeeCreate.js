@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { CREATE_EMPLOYEE_MUTATION, GET_ALL_EMPLOYEES } from '../queries.js';
 import { useNavigate } from 'react-router-dom';
+import { differenceInYears, parseISO } from 'date-fns';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 
 function EmployeeCreate(props) {
@@ -32,7 +33,7 @@ function EmployeeCreate(props) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    age: '',
+    // age: '',
     dateOfBirth: '',
     dateOfJoining: '',
     title: '',
@@ -57,12 +58,10 @@ function EmployeeCreate(props) {
         message = "Only letters and spaces are allowed.";
       }
     }
-    if (value.trim() && (name == 'age')) {
-      const ageRegex = /^\d+$/;
-      if (value.trim() && !ageRegex.test(value)) {
-        message = "Age must be a number.";
-      } else if (value.trim() && (parseInt(value) < 20 || parseInt(value) > 60)) {
-        message = "Age must be between 20 and 60.";
+    if (value.trim() && (name == 'dateOfBirth')) {
+      const age = differenceInYears(new Date(), parseISO(formData.dateOfBirth));
+      if ((parseInt(age) < 20 || parseInt(age) > 70)) {
+        message = "Age must be between 20 and 70.";
       }
     }
 
@@ -74,11 +73,13 @@ function EmployeeCreate(props) {
     let tempErrors = {};
     tempErrors.firstName = formData?.firstName ? "" : "First Name is required.";
     tempErrors.lastName = formData?.lastName ? "" : "Last Name is required.";
-    tempErrors.age = formData?.age >= 20 && formData.age <= 70 ? "" : "Age must be between 20 and 70.";
     tempErrors.dateOfJoining = formData?.dateOfJoining ? "" : "Date of Joining is required";
     tempErrors.title = formData?.title ? "" : "Title is required";
     tempErrors.department = formData?.department ? "" : "Department is required";
     tempErrors.employeeType = formData?.employeeType ? "" : "EmployeeType is required";
+    const age = differenceInYears(new Date(), parseISO(formData.dateOfBirth));
+    tempErrors.dateOfBirth = age >= 20 && age <= 70 ? "":"Age must be between 20 and 70"
+    
     setErrors(tempErrors);
     return Object.values(tempErrors).every(x => x === "");
   };
@@ -86,7 +87,7 @@ function EmployeeCreate(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const ageInt = parseInt(formData.age, 10); // Parse age to integer
+      const ageInt = parseInt(differenceInYears(new Date(), parseISO(formData.dateOfBirth)), 10); // Parse age to integer
       createEmployee({ variables: { ...formData, age: ageInt } })
         .then(response => {
           console.log('Employee created:', response.data.createEmployee);
@@ -116,10 +117,6 @@ function EmployeeCreate(props) {
               <label>Last Name</label>
               <input name="lastName" type="text" placeholder="Last Name" onChange={handleInputChange} onBlur={handleBlur} />
               <div className='error-message'>{errors.lastName}</div>
-
-              <label>Age</label>
-              <input name="age" type="number" placeholder="Age" onChange={handleInputChange} />
-              <div className='error-message'>{errors.age}</div>
 
               <label>Date-of-Birth</label>
               <input name="dateOfBirth" type="date" placeholder="Date-of-Birth" value={formData.dateOfBirth} onChange={handleInputChange} onBlur={handleBlur} />
