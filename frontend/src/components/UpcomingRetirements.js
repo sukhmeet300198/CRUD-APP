@@ -19,7 +19,7 @@ function UpcomingRetirements({ employeeType }) {
       <Row>
         <Col>
           <h2 className="center-text">Upcoming Retirements</h2>
-          <h6 className="center-text">List of Employees who will retired in upcoming 6 months (AGE greater than 65)</h6>
+          <h6 className="center-text">List of Employees who will retired in upcoming 6 months (AGE = 65)</h6>
           {data.upcomingRetirements && data.upcomingRetirements.length > 0 ? ( <>
             <Table striped bordered hover style={{ width: '80%', margin: '0 auto' }}>
               <thead>
