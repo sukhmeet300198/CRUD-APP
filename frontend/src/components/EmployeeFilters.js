@@ -26,7 +26,7 @@ function EmployeeFilters() {
                 <option value="PartTime">Part Time</option>
                 <option value="Contract">Contract</option>
                 <option value="Seasonal">Seasonal</option>
-                <option value="Retirement">Retirement</option>
+                <option value="Retirement">Upcomimg Retirement</option>
               </Form.Select>
             </Form.Group>
           </Form>

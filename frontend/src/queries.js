@@ -23,6 +23,7 @@ query GetEmployeeById($id: ID!) {
     firstName
     lastName
     age
+    dateOfBirth
     dateOfJoining
     title
     department
@@ -73,6 +74,7 @@ export const GET_UPCOMING_RETIREMENTS = gql`
       firstName
       lastName
       age
+      dateOfBirth
       dateOfJoining
       title
       department

@@ -95,8 +95,8 @@ const resolvers = {
       const currentDate = new Date();
       const age = differenceInYears(currentDate, dob);
 
-      if (age < 20 || age > 70) {
-        throw new Error('Age must be between 20 and 60');
+      if (age < 20 || age > 64) {
+        throw new Error('Age must be between 20 and 64');
       }
 
       const newEmployee = new Employee({

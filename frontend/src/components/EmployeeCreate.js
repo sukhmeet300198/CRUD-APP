@@ -78,7 +78,7 @@ function EmployeeCreate(props) {
     tempErrors.department = formData?.department ? "" : "Department is required";
     tempErrors.employeeType = formData?.employeeType ? "" : "EmployeeType is required";
     const age = differenceInYears(new Date(), parseISO(formData.dateOfBirth));
-    tempErrors.dateOfBirth = age >= 20 && age <= 70 ? "":"Age must be between 20 and 70"
+    tempErrors.dateOfBirth = age >= 20 && age <= 64 ? "":"Age must be between 20 and 64"
     
     setErrors(tempErrors);
     return Object.values(tempErrors).every(x => x === "");
