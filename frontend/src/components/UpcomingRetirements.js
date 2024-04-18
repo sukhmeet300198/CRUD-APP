@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_UPCOMING_RETIREMENTS } from '../queries';
-import { Container, Row, Col, Table, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Table, Alert, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 const { parseISO, format } = require('date-fns');
 
 function UpcomingRetirements({ employeeType }) {
@@ -18,7 +19,7 @@ function UpcomingRetirements({ employeeType }) {
       <Row>
         <Col>
           <h2 className="center-text">Upcoming Retirements</h2>
-          {data.upcomingRetirements && data.upcomingRetirements.length > 0 ? (
+          {data.upcomingRetirements && data.upcomingRetirements.length > 0 ? ( <>
             <Table striped bordered hover style={{ width: '60%', margin: '0 auto' }}>
               <thead>
                 <tr>
@@ -43,6 +44,10 @@ function UpcomingRetirements({ employeeType }) {
                 ))}
               </tbody>
             </Table>
+             <div className="d-grid gap-2">
+             <Button variant="primary" as={Link} to="/" className="full-width-button">Back to Home</Button>
+           </div>
+           </>
           ) : (
             <Alert variant="secondary">No employee in retirement list.</Alert>
           )}

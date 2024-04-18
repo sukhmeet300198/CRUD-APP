@@ -29,12 +29,14 @@ const resolvers = {
           throw new Error('Required employee data (date of joining or age at joining) is missing');
         }
 
-        const dateOfJoining = parseISO(employee.dateOfJoining);
-        const yearsToWork = 60 - employee.age;
-        const retirementDate = addYears(dateOfJoining, yearsToWork);
+        const dob = parseISO(employee.dateOfBirth);
         const currentDate = new Date();
+        const retirementAge = 65;
 
-        // Convert both dates to ISO strings to ensure consistent formatting for comparison
+        // Calculate the retirement date based on date of birth
+        const retirementDate = addYears(dob, retirementAge);
+
+        // Format dates to ISO strings for comparison
         const formattedCurrentDate = formatISO(currentDate);
         const formattedRetirementDate = formatISO(retirementDate);
 
@@ -44,12 +46,14 @@ const resolvers = {
           yearsLeft = differenceInYears(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate));
           monthsLeft = differenceInMonths(parseISO(formattedRetirementDate), parseISO(formattedCurrentDate)) % 12;
           daysLeft = differenceInDays(parseISO(formattedRetirementDate), addYears(parseISO(formattedCurrentDate), yearsLeft)) % 30;
-        }
+                  }
 
+
+        employee.retirementDate=formattedRetirementDate
         employee.retirementDetails = {
           years: yearsLeft,
           months: monthsLeft,
-          days: daysLeft
+          days: daysLeft 
         };
         
         return employee;
