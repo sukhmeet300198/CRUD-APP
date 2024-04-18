@@ -7,6 +7,21 @@ const typeDefs = gql`
     upcomingRetirements(withinMonths: Int!, employeeType: String): [Employee]
   }
 
+  type Employee {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    age:Int!
+    dateOfBirth: String! 
+    dateOfJoining : String!
+    title: String!
+    department: String!
+    employeeType: String!
+    currentStatus: Int! 
+    retirementDate : String!
+    retirementDetails: RetirementDetails
+  }
+
   type RetirementDetails {
     years: Int
     months: Int
@@ -18,6 +33,7 @@ const typeDefs = gql`
       firstName: String!, 
       lastName: String!,
       age:Int!,
+      dateOfBirth: String! 
       dateOfJoining : String!,
       title: String!,
       department: String!,
@@ -32,20 +48,7 @@ const typeDefs = gql`
     ): Employee
     
     deleteEmployee(id: ID!): Employee
-  }
-
-  type Employee {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    age:Int!
-    dateOfJoining : String!
-    title: String!
-    department: String!
-    employeeType: String!
-    currentStatus: Int!
-    retirementDetails: RetirementDetails
-  }
+  }  
 `;
 
 module.exports = typeDefs;

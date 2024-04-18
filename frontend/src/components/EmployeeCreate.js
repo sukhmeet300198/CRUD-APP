@@ -33,6 +33,7 @@ function EmployeeCreate(props) {
     firstName: '',
     lastName: '',
     age: '',
+    dateOfBirth: '',
     dateOfJoining: '',
     title: '',
     department: '',
@@ -108,18 +109,27 @@ function EmployeeCreate(props) {
           {error && <Alert variant="danger">{error.message}</Alert>}
           <form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
+              <label>First Name</label>
               <input name="firstName" type="text" placeholder="First Name" onChange={handleInputChange} onBlur={handleBlur} />
               <div className='error-message'>{errors.firstName}</div>
 
+              <label>Last Name</label>
               <input name="lastName" type="text" placeholder="Last Name" onChange={handleInputChange} onBlur={handleBlur} />
               <div className='error-message'>{errors.lastName}</div>
 
+              <label>Age</label>
               <input name="age" type="number" placeholder="Age" onChange={handleInputChange} />
               <div className='error-message'>{errors.age}</div>
 
+              <label>Date-of-Birth</label>
+              <input name="dateOfBirth" type="date" placeholder="Date-of-Birth" value={formData.dateOfBirth} onChange={handleInputChange} onBlur={handleBlur} />
+              <div className='error-message'>{errors.dateOfBirth}</div>
+
+              <label>Date-of-Joining</label>
               <input name="dateOfJoining" type="date" onChange={handleInputChange} onBlur={handleBlur} />
               <div className='error-message'>{errors.dateOfJoining}</div>
 
+              <label>Title</label>
               <select name="title" onChange={handleInputChange} onBlur={handleBlur}>
                 <option value="none" selected disabled hidden>Select Type of Employee</option>
                 <option value="Employee">Employee</option>
@@ -129,6 +139,7 @@ function EmployeeCreate(props) {
               </select>
               <div className='error-message'>{errors.title}</div>
 
+              <label>Department</label>
               <select name="department" onChange={handleInputChange} onBlur={handleBlur}>
                 <option value="none" selected disabled hidden>Select Department of Employee</option>
                 <option value="IT">IT</option>
@@ -138,6 +149,7 @@ function EmployeeCreate(props) {
               </select>
               <div className='error-message'>{errors.department}</div>
 
+              <label>EmployeeType</label>
               <select name="employeeType" onChange={handleInputChange} onBlur={handleBlur}>
                 <option value="none" selected disabled hidden>Select Employee Type</option>
                 <option value="FullTime">Full Time</option>

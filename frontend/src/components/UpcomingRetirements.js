@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_UPCOMING_RETIREMENTS } from '../queries';
 import { Container, Row, Col, Table, Alert } from 'react-bootstrap';
-const { parseISO, addYears } = require('date-fns');
+const { parseISO, format } = require('date-fns');
 
 function UpcomingRetirements({ employeeType }) {
   const { data, loading, error } = useQuery(GET_UPCOMING_RETIREMENTS, {
@@ -11,6 +11,7 @@ function UpcomingRetirements({ employeeType }) {
 
   if (loading) return <Alert variant="info">Loading...</Alert>;
   if (error) return <Alert variant="danger">Error: {error.message}</Alert>;
+  console.log("Upcoming Retirement------------>", data?.upcomingRetirements);
 
   return (
     <Container className="mt-4">
@@ -23,6 +24,7 @@ function UpcomingRetirements({ employeeType }) {
                 <tr>
                   <th>First Name</th>
                   <th>Last Name</th>
+                  <th>Age</th>
                   <th>Date of Joining</th>
                   <th>Retirement Date</th>
                   <th>Employee Type</th>
@@ -31,11 +33,12 @@ function UpcomingRetirements({ employeeType }) {
               <tbody>
                 {data.upcomingRetirements.map(emp => (
                   <tr key={emp.id}>
-                    <td>{emp.firstName}</td>
-                    <td>{emp.lastName}</td>
-                    <td>{new Date(emp.dateOfJoining).toLocaleDateString()}</td>
-                    <td>{new Date(new Date(emp.dateOfJoining).setFullYear(new Date(emp.dateOfJoining).getFullYear() + 65)).toLocaleDateString()}</td>
-                    <td>{emp.employeeType}</td>
+                    <td>{emp?.firstName}</td>
+                    <td>{emp?.lastName}</td>
+                    <td>{emp?.age}</td>
+                    <td>{format(parseISO(emp?.dateOfJoining), 'dd-MMM-yyyy')}</td>
+                    <td>{format(parseISO(emp?.retirementDate), 'dd-MMM-yyyy')}</td>
+                    <td>{emp?.employeeType}</td>
                   </tr>
                 ))}
               </tbody>

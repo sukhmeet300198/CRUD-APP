@@ -51,7 +51,7 @@ const resolvers = {
           months: monthsLeft,
           days: daysLeft
         };
-
+        
         return employee;
       } catch (error) {
         console.error('Error fetching employee details:', error);
@@ -61,17 +61,29 @@ const resolvers = {
     upcomingRetirements: async (_, { withinMonths, employeeType }) => {
 
       const currentDate = new Date();
+      const retirementAge = 65;
       const allEmployees = await Employee.find(employeeType ? { employeeType } : {});
-      return allEmployees.filter(employee => {
-        const dateOfJoining = parseISO(employee.dateOfJoining);
-        const retirementDate = addYears(dateOfJoining, 60 - employee.age);
-        return differenceInMonths(retirementDate, currentDate) <= withinMonths;
-      });
+      return allEmployees.map(employee => {
+        const dob = parseISO(employee.dateOfBirth);
+        const retirementDate = addYears(dob, retirementAge);
+        const monthsUntilRetirement = differenceInMonths(retirementDate, currentDate);
+
+        // Check if the retirement date is within the specified months from now
+        if (monthsUntilRetirement <= withinMonths) {
+          return {
+            ...employee.toObject(),  // Convert Mongoose document to JavaScript object
+            id: employee._id.toString(),  // Ensure `id` is a string
+            retirementDate: retirementDate.toISOString(),  // Ensure the retirement date is in ISO string format
+            monthsUntilRetirement  // Optionally include this if needed in the client
+          };
+        }
+        return null;  // Return null for those who do not meet the condition
+      }).filter(emp => emp !== null);  // Filter out null values to only return valid employee objects
     },
   },
   Mutation: {
-    createEmployee: async (_, { firstName, lastName, age, dateOfJoining, title, department, employeeType }) => {
-      if (!firstName || !lastName || !dateOfJoining || !age || !title || !department || !employeeType) {
+    createEmployee: async (_, { firstName, lastName, age, dateOfJoining, dateOfBirth, title, department, employeeType }) => {
+      if (!firstName || !lastName || !dateOfJoining || !age || !title || !department || !employeeType || !dateOfBirth) {
         throw new Error('All fields are required');
       }
 
@@ -82,18 +94,19 @@ const resolvers = {
       const newEmployee = new Employee({
         firstName,
         lastName,
-        dateOfJoining,
         age,
+        dateOfJoining,
+        dateOfBirth,
         title,
         department,
-        employeeType,
+        employeeType
       });
 
       try {
         await newEmployee.save();
         return newEmployee;
       } catch (error) {
-        console.log(error);
+        console.error('Error creating new employee:', error);
         throw new Error('Error creating new employee');
       }
     },

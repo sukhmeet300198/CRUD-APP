@@ -12,11 +12,6 @@ export const GET_ALL_EMPLOYEES = gql`
       department
       employeeType
       currentStatus
-      retirementDetails {
-        years
-        months
-        days
-      }
     }
   }
 `;
@@ -33,6 +28,7 @@ query GetEmployeeById($id: ID!) {
     department
     employeeType
     currentStatus
+    retirementDate
     retirementDetails {
       years
       months
@@ -42,13 +38,6 @@ query GetEmployeeById($id: ID!) {
 }
 `;
 
-export const CREATE_EMPLOYEE_MUTATION = gql`
-  mutation CreateEmployee($firstName: String!, $lastName: String!,$age:Int!,$dateOfJoining: String!,$title :String!,$department:String!,$employeeType: String!) {
-    createEmployee(firstName: $firstName, lastName: $lastName,age:$age,dateOfJoining: $dateOfJoining,title: $title,department:$department,employeeType:$employeeType) {
-      id
-    }
-  }
-`;
 
 export const UPDATE_EMPLOYEE_MUTATION = gql`
   mutation UpdateEmployee($id: ID!, $title: String, $department: String, $currentStatus: Boolean) {
@@ -89,7 +78,19 @@ export const GET_UPCOMING_RETIREMENTS = gql`
       department
       employeeType
       currentStatus
+      retirementDate
+      retirementDetails{
+        years
+        months
+        days
+      } 
     }
   }
 `;
-
+export const CREATE_EMPLOYEE_MUTATION = gql`
+  mutation CreateEmployee($firstName: String!, $lastName: String!, $age: Int!, $dateOfJoining: String!, $dateOfBirth: String!, $title: String!, $department: String!, $employeeType: String!) {
+    createEmployee(firstName: $firstName, lastName: $lastName, age: $age, dateOfJoining: $dateOfJoining, dateOfBirth: $dateOfBirth, title: $title, department: $department, employeeType: $employeeType) {
+      id
+    }
+  }
+`;
